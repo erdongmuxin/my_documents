@@ -3,7 +3,7 @@
 
 	`wget https://download.docker.com/linux/static/stable/x86_64/docker-18.09.7.tgz`
 
-	> docker文件可以在https://download.docker.com/linux/static/stable/找到自己想要的版本,复制链接地址,替换掉上面的链接即可
+   > docker文件可以在https://download.docker.com/linux/static/stable/找到自己想要的版本,复制链接地址,替换掉上面的链接即可
 
   2. 解压文件并拷贝文件到系统的PATH目录
 
