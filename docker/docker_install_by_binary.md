@@ -19,6 +19,13 @@
      ```shell
      echo '/usr/bin/dockerd &' >> /etc/rc.d/rc.local
      ```
+5. docker的日志文件有时候会很大,而阿里云初始磁盘往往只有40G,但是可以通过以下操作更改磁盘,例如,已经将一个100G的硬盘挂到了/opt
+     ```shell
+     cd /var/lib
+     mv docker/* /opt/docker/
+     rm -rf docker
+     ln -s /opt/docker/ /var/lib/docker
+     ```
 
 
 
