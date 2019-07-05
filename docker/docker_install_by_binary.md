@@ -17,7 +17,7 @@
 4. 可以添加到rc.local用于开机自启(也可以添加docker.sevice,用systemctl来实现开机自启,这种操作更加复杂,这里不做介绍)
 
      ```shell
-     echo 'dockerd &' >> /etc/rc.d/rc.local
+     echo '/usr/bin/dockerd &' >> /etc/rc.d/rc.local
      ```
 
 
