@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>README</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+:root { --side-bar-bg-color: #eee8d5; --text-color: #839496; --item-hover-bg-color: #eee8d5; --window-border: 1px solid #93a1a1; --active-file-bg-color: #fdf6e3; --active-file-text-color: #93a1a1; --item-hover-text-color: #93a1a1; }
+html { font-size: 16px; }
+body { font-family: Consolas, Mononoki, "Roboto Sans", "Liberation Mono", monospace; color: rgb(88, 110, 117); line-height: 1.6; background-color: rgb(253, 246, 227); }
+#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+body > :first-child { margin-top: 0px !important; }
+body > :last-child { margin-bottom: 0px !important; }
+a { color: rgb(38, 139, 210); }
+a:hover { color: rgb(203, 75, 22); }
+.md-toc-inner { color: rgb(147, 161, 161) !important; }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: normal; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 232, 213); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 232, 213); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, ul, ol, dl, table { margin: 0.8em 0px; }
+blockquote { margin: 1.6em 3.2em; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 1px; padding: 0px; margin: 24px 0px; background-color: rgb(238, 232, 213); border-width: 0px 0px 1px; border-style: none none solid; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; overflow: hidden; box-sizing: content-box; border-bottom-color: rgb(238, 232, 213); }
+body > h2:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(181, 137, 0); padding: 0px 15px; color: rgb(147, 161, 161); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(204, 204, 204); margin: 0px; padding: 0px; }
+table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); }
+.md-fences, code, tt { background-color: rgb(238, 232, 213); color: rgb(203, 75, 22); border-radius: 3px; font-family: Consolas, Mononoki, "Roboto Mono", "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding: 8px 1em 6px; }
+.task-list { padding-left: 0px; }
+.task-list-item { padding-left: 32px; }
+.task-list-item input { top: 3px; left: 8px; }
+@media screen and (min-width: 914px) {
+}
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { overflow-wrap: break-word; }
+}
+.md-fences { background-color: rgb(238, 232, 213); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; font-family: Consolas, Mononoki, "Roboto Mono", "Liberation Mono", Courier, monospace; padding: 8px 16px; font-size: 0.9em; color: inherit; }
+.md-tag { color: inherit; }
+.md-toc { margin-top: 10px; padding-bottom: 10px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { background-color: rgb(238, 232, 213); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+#md-notification::before { top: 10px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: Consolas, Mononoki, "Roboto Mono", "Liberation Mono", monospace; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name="**%E9%93%B6%E7%A7%91%E7%8E%AF%E4%BC%81git%E8%A7%84%E8%8C%83**" class="md-header-anchor"></a><strong><span>银科环企GIT规范</span></strong></h1><h2><a name="**%E8%83%8C%E6%99%AF**" class="md-header-anchor"></a><strong><span>背景</span></strong></h2><ul><li><h4><a name="%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%B8%80%E6%A0%B7%E9%9C%80%E8%A6%81%E6%A0%87%E5%87%86%E5%8C%96%E5%AE%9E%E6%96%BD%E7%BB%86%E5%88%99%EF%BC%8C%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E3%80%81%E6%B5%8B%E8%AF%95%E4%BA%BA%E5%91%98%E4%BB%A5%E5%8F%8A%E8%BF%90%E7%BB%B4%E4%BA%BA%E5%91%98%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9A" class="md-header-anchor"></a><span>使用Git管理一样需要标准化实施细则，开发人员、测试人员以及运维人员如何使用：</span></h4><ol start='' ><li><span>创建仓库</span></li><li><span>标准化项目分支结构</span></li><li><span>控制源码管理</span></li><li><span>标准化开发，发布流程</span></li><li><span>保证任何情况出现，都能快速恢复当前生产环境，迅速回滚到上一个稳定的版本</span></li></ol></li></ul><hr /><p>&nbsp;</p><h2><a name="**%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93**" class="md-header-anchor"></a><strong><span>创建仓库</span></strong></h2><ol start='' ><li><h4><a name="**%E7%BE%A4%E7%BB%84%E7%BB%93%E6%9E%84%EF%BC%9A**" class="md-header-anchor"></a><strong><span>群组结构：</span></strong></h4><ul><li><span>创建群组以及仓库由Git管理员执行</span></li><li><span>结合公司实际情况,群组可以以人员来分类,也可以以项目来分类,推荐是两者都使用(我们公司只对人员进行了群组分类)</span></li></ul></li><li><h4><a name="**%E4%BA%BA%E5%91%98%E5%88%9B%E5%BB%BA:**" class="md-header-anchor"></a><strong><span>人员创建:</span></strong></h4><p><img src='https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1562685045667.png' alt='1562665956248' referrerPolicy='no-referrer' /></p></li></ol><hr /><p>&nbsp;</p><h2><a name="**%E5%88%86%E6%94%AF%E8%A7%84%E5%88%92**" class="md-header-anchor"></a><strong><span>分支规划</span></strong></h2><ul><li><span>master主分支(全生命周期,只允许合并)</span></li><li><span>uat</span><span>_</span><span>*</span><span>*</span><span>-release分支(uat测试分支,全生命周期,允许提交以及合并)</span></li><li><span>*</span><span>*</span><span>_</span><span>*</span><span>*</span><span>-release分支(线上分支,全生命周期,允许提交以及合并)</span></li><li><span>last</span><span>_</span><span>*</span><span>*</span><span>_</span><span>*</span><span>*</span><span>-release分支(上一个稳定的线上版本分支,全生命周期,只允许合并)</span></li><li><span>dev_**分支(短生命周期,允许提交以及合并)</span></li></ul><hr /><h2><a name="**%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B**" class="md-header-anchor"></a><strong><span>操作流程</span></strong></h2><blockquote><p><span>案例相对于需要进行uat测试的项目**(以中南项目ota3为例)</span></p></blockquote><ol start='' ><li><h4><a name="**%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87**" class="md-header-anchor"></a><strong><span>前期准备</span></strong></h4><ol start='' ><li><span>创建项目,运维人员在master分支编写初始.gitlab-ci.yml文件</span></li><li><span>从master拉取zhongnan_ota3-release分支</span></li><li><span>从zhongnan_ota3-release拉取last_zhongnan_ota3-release分支</span></li><li><span>从zhongnan_ota3-release拉取uat_ota3-release分支</span></li></ol></li><li><h4><a name="**%E5%BC%80%E5%8F%91**" class="md-header-anchor"></a><strong><span>开发</span></strong></h4><ol start='' ><li><span>从uat_ota3-release上拉取最新代码,命名为dev_ota3.1(需求或功能名),已经拉取则忽略这一步</span></li><li><span>完成开发并自测之后,填写commit信息,然后提交代码(只需提交,不需push)</span></li><li><span>切换到uat_ota3-release,合并dev_ota3.1分支,打上版本信息tag:uat_ota3.1_1.0(非必须),然后push</span></li></ol></li><li><h4><a name="**uat%E6%B5%8B%E8%AF%95**" class="md-header-anchor"></a><strong><span>uat测试</span></strong></h4><ol start='' ><li><span>开发人员合并uat_ota3-release分支之后,会自动推送企业微信的消息,测试人员点击连接,可以部署在uat机器上,测试人员随后进行测试</span></li><li><span>部署出错,运维人员检查cicd文件,重新推送微信消息,测试人员重新执行操作(稳定之后几乎不会出现)</span></li><li><span>测试不通过,测试人员通知开发人员修改,回到第2步继续走流程</span></li><li><span>测试通过,测试人员告知开发人员</span></li></ol></li><li><h4><a name="**%E7%BA%BF%E4%B8%8A%E5%8F%91%E5%B8%83**" class="md-header-anchor"></a><strong><span>线上发布</span></strong></h4><ol start='' ><li><span>开发人员收到测试通过的通知,切换到zhongnan_ota3-release分支,合并dev_ota3.1分支,打上版本信息tag:zn_ota3.1_1.0(非必须),然后push</span></li><li><span>cicd会自动将当前版本的zhongnan_ota3-release分支备份到last_zhongnan_ota3-release分支,并自动发布</span></li><li><span>发布出错,通知运维人员检查将last_zhongnan_ota3-release发布,检查cicd文件,再重新发布(稳定之后几乎不会出现)</span></li><li><span>线上出现小型bug,执行2,4操作</span></li><li><span>线上出现大型bug,通知运维,将last_zhongnan_ota3-release发布,开发人员则执行2,3,4操作,修复bug</span></li></ol><blockquote><p><strong><span>连续两次出现重大bug要注意,此时last_zhongnan_ota3-release已经不是稳定分支,此时请通知运维进行手动回滚</span></strong></p></blockquote><blockquote><p><strong><span>对于个别不需要uat的项目,将第三步剔除即可</span></strong></p></blockquote></li><li><h4><a name="**%E6%B5%81%E7%A8%8B%E5%9B%BE**" class="md-header-anchor"></a><strong><span>流程图</span></strong></h4><ul><li><p><span>将大版本3.1从小版本1.0更新到小版本2.0,发生一次重大bug,修复到小版本2.1的简单流程图如下</span></p><p><img src='https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1562686985404.png' alt='1562686950059' referrerPolicy='no-referrer' /></p></li></ul></li></ol></div>
+</body>
+</html>
