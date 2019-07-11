@@ -26,7 +26,7 @@
      cd /var/lib
      mv docker/* /opt/docker/
      rm -rf docker
-     ln -s /opt/docker/ /var/lib/docker
+     ln -s /opt/docker /var/lib/docker
      ```
      3. 重启docker服务
 
