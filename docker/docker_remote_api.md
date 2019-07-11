@@ -6,7 +6,7 @@
 
 1. TLS配置，生成key文件
 
-    ```shell
+    ```bash
     openssl genrsa -aes256 -out ca-key.pem 4096
     openssl req -new -x509 -days 3650 -key ca-key.pem -sha256 -out ca.pem
     openssl genrsa -out server-key.pem 4096
@@ -24,7 +24,7 @@
 
 3. 对于二进制安装的docker服务,将开启docker的命令更改为
 
-    ```shell
+    ```bash
     nohup dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2375 --tlsverify --tlscacert=/root/.docker/ca.pem -- tlscert=/root/.docker/server-cert.pem --tlskey=/root/.docker/server-key.pem &
     ```
     
@@ -32,7 +32,7 @@
     
 4. 对于yum安装的docker服务,修改execstart配置,并重启服务
 
-    ```shell
+    ```bash
     vim  /lib/systemd/system/docker.service
     ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2375 --tlsverify --tlscacert=/root/.docker/ca.pem --tlscert=/root/.docker/server-cert.pem --tlskey=/root/.docker/server-key.pem
     systemctl daemon-reload
@@ -41,7 +41,7 @@
 
 5. 测试:将cert.pem,key.pem这两个文件复制到测试机上, curl中-k的意思是Allow connections to SSL sites without certs，不验证证书
 
-    ```shell
+    ```bash
     curl -k https://docker服务器IP:2375/info --cert ./cert.pem --key ./key.pem
     ```
 
