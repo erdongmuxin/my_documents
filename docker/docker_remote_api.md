@@ -7,17 +7,19 @@
 1. TLS配置，生成key文件
 
     ```bash
-    openssl genrsa -aes256 -out ca-key.pem 4096
-    openssl req -new -x509 -days 3650 -key ca-key.pem -sha256 -out ca.pem
-    openssl genrsa -out server-key.pem 4096
-    openssl req -sha256 -new -key server-key.pem -out server.csr
-    openssl x509 -req -days 3650 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem
-    openssl genrsa -out key.pem 4096
-    openssl req -new -key key.pem -out client.csr
-    openssl x509 -req -days 3650 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem
-    rm -v client.csr server.csr
-    chmod -v 0400 ca-key.pem key.pem server-key.pem
-    chmod -v 0444 ca.pem server-cert.pem cert.pem
+    #!/bin/bash
+    hostname=uat
+    openssl genrsa -aes256 -out ca-key-$hostname.pem 4096
+    openssl req -new -x509 -days 3650 -key ca-key-$hostname.pem -sha256 -out ca-$hostname.pem
+    openssl genrsa -out server-key-$hostname.pem 4096
+    openssl req -sha256 -new -key server-key-$hostname.pem -out server-$hostname.csr
+    openssl x509 -req -days 3650 -sha256 -in server-$hostname.csr -CA ca-$hostname.pem -CAkey ca-key-$hostname.pem -CAcreateserial -out server-cert-$hostname.pem
+    openssl genrsa -out key-$hostname.pem 4096
+    openssl req -new -key key-$hostname.pem -out client-$hostname.csr
+    openssl x509 -req -days 3650 -sha256 -in client-$hostname.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert-$hostname.pem
+    rm -v client-$hostname.csr server-$hostname.csr
+    chmod -v 0400 ca-key-$hostname.pem key-$hostname.pem server-key-$hostname.pem
+    chmod -v 0444 ca-$hostname.pem server-cert-$hostname.pem cert-$hostname.pem
     ```
 
 2. 将ca.pem,server-cert.pem,server-key.pem复制到服务器的/root/.docker目录下
