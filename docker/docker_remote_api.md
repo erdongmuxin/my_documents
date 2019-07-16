@@ -4,7 +4,7 @@
 
 　　docker默认是能使用本地的socket进行管理，这个在集群中使用的时候很不方便，因为很多功能还是需要链接docker服务进行操作，docker默认也可以开启tcp访问，但是这就相当于把整个docker集群对外公开了，很不安全，需要假如TLS进行加密通信，操作如下：
 
-1. TLS配置，生成key文件
+1. TLS配置，生成key文件)
 
     ```bash
     #!/bin/bash
@@ -22,12 +22,12 @@
     chmod -v 0444 ca-$hostname.pem server-cert-$hostname.pem cert-$hostname.pem
     ```
 
-2. 将ca.pem,server-cert.pem,server-key.pem复制到服务器的/root/.docker目录下
+2. 将ca-$hostname.pem,server-cert-$hostname.pem,server-key-$hostname.pem复制到服务器的/root/.docker目录下(自行将$hostname更改为之前设置的主机名,以下同)
 
 3. 对于二进制安装的docker服务,将开启docker的命令更改为
 
     ```bash
-    nohup dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2375 --tlsverify --tlscacert=/root/.docker/ca.pem -- tlscert=/root/.docker/server-cert.pem --tlskey=/root/.docker/server-key.pem &
+    nohup dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2376 --tlsverify --tlscacert=/root/.docker/ca-$hostname.pem -- tlscert=/root/.docker/server-cert-$hostname.pem --tlskey=/root/.docker/server-key-$hostname.pem &
     ```
     
     > 注意开机自启的命令也需要同步更改
@@ -36,7 +36,7 @@
 
     ```bash
     vim  /lib/systemd/system/docker.service
-    ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2375 --tlsverify --tlscacert=/root/.docker/ca.pem --tlscert=/root/.docker/server-cert.pem --tlskey=/root/.docker/server-key.pem
+    ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -D -H tcp://0.0.0.0:2376 --tlsverify --tlscacert=/root/.docker/ca-$hostname.pem --tlscert=/root/.docker/server-cert-$hostname.pem --tlskey=/root/.docker/server-key-$hostname.pem
     systemctl daemon-reload
     systemctl restart docker
     ```
@@ -44,7 +44,7 @@
 5. 测试:将cert.pem,key.pem这两个文件复制到测试机上, curl中-k的意思是Allow connections to SSL sites without certs，不验证证书
 
     ```bash
-    curl -k https://docker服务器IP:2375/info --cert ./cert.pem --key ./key.pem
+    curl -k https://docker服务器IP:2376/info --cert ./cert-$hostname.pem --key ./key-$hostname.pem
     ```
 
     > 能返回docker信息则为成功,证书请妥善保管
