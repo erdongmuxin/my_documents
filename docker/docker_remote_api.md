@@ -16,7 +16,7 @@
     openssl x509 -req -days 3650 -sha256 -in server-$hostname.csr -CA ca-$hostname.pem -CAkey ca-key-$hostname.pem -CAcreateserial -out server-cert-$hostname.pem
     openssl genrsa -out key-$hostname.pem 4096
     openssl req -new -key key-$hostname.pem -out client-$hostname.csr
-    openssl x509 -req -days 3650 -sha256 -in client-$hostname.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert-$hostname.pem
+    openssl x509 -req -days 3650 -sha256 -in client-$hostname.csr -CA ca-$hostname.pem -CAkey ca-key-$hostname.pem -CAcreateserial -out cert-$hostname.pem
     rm -v client-$hostname.csr server-$hostname.csr
     chmod -v 0400 ca-key-$hostname.pem key-$hostname.pem server-key-$hostname.pem
     chmod -v 0444 ca-$hostname.pem server-cert-$hostname.pem cert-$hostname.pem
