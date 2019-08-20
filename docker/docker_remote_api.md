@@ -32,7 +32,7 @@
     
     > 注意开机自启的命令也需要同步更改
     
-4. 对于yum安装的docker服务,修改execstart配置,并重启服务
+4. 对于systemctl启动的docker服务,修改execstart配置,并重启服务
 
     ```bash
     vim  /lib/systemd/system/docker.service
@@ -41,7 +41,7 @@
     systemctl restart docker
     ```
 
-5. 测试:将cert.pem,key.pem这两个文件复制到测试机上, curl中-k的意思是Allow connections to SSL sites without certs，不验证证书
+5. 测试:将cert-$hostname.pem,key-$hostname.pem这两个文件复制到测试机上, curl中-k的意思是Allow connections to SSL sites without certs，不验证证书
 
     ```bash
     curl -k https://docker服务器IP:2376/info --cert ./cert-$hostname.pem --key ./key-$hostname.pem
