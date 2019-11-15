@@ -128,6 +128,8 @@
 
                 ```yaml
                 apiVersion: v1 # 给pv设置权限
+                
+                
                 kind: ServiceAccount
                 metadata:
                   name: nfs-client-provisioner
@@ -167,11 +169,11 @@
                       # 注意两个需要自己填写地方没有区别,一模一样,但是意义不一样: 
                       # 上面的是将配置信息写入环境变量,这样"quay.io/external_storage/nfs-client-provisioner:latest"这个容器便能够在nfs服务器上自动创建目录来支持其他容器的持久化存储
                       # 而下面的则是自己利用nfs为自己做了一个持久化存储
-                      # 因此下面的可以采用别的方式,比如emptydir,hostPath之类的,但是上面的一定要配置好
+              # 因此下面的可以采用别的方式,比如emptydir,hostPath之类的,但是上面的一定要配置好
                 ```
 
             - class.yaml
-
+            
                 ```yaml
                 apiVersion: storage.k8s.io/v1
                 kind: StorageClass
@@ -182,15 +184,15 @@
                   archiveOnDelete: "true" # 这里默认是false,不会有备份,当你的pvc被删除时,pv会被直接删除掉,数据则会丢失
                   # 修改为true,当你的pvc被删除时,pv上面的数据会自动备份然后删除
                 ```
-            
+        
         3. 启动pv
-
+    
             ```shell
-            kubectl apply -f rbac.yaml -f deployment.yaml -f class.yaml # 注意三个文件的顺序不要写反了
+        kubectl apply -f rbac.yaml -f deployment.yaml -f class.yaml # 注意三个文件的顺序不要写反了
             ```
 
         4. 验证
-
+    
             ```shell
             kubectl apply -f test-claim.yaml -f test-pod.yaml # 注意顺序
             
@@ -220,13 +222,13 @@
             -rw-r--r-- 1 root root 0 8月  28 11:26 SUCCESS
             
             rm -rf archived-* #清理掉测试的目录
-            exit # 退出nfs_server
+        exit # 退出nfs_server
             ```
 
     - #### 配置pv简单版(方法二,支持自建nfs与阿里云nas,推荐使用)
 
         1. 修改/etc/ansible/roles/cluster-storage/defaults/main.yml
-
+    
             ```yaml
             storage: # 可以开启多个,但是注意class和name不能有冲突
               nfs:
@@ -302,9 +304,8 @@
         
         6. 利用`kubectl delete -f test_claim.yml`删除测试用的pvc
         
-            ​	![1567339955873](https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1567587308110.png)
-            ​    
-
+            ![1567339955873](https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1567587308110.png)
+    
 - ### 配置zookeeper集群(完全参考[官方文档](https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/))
   
     1. ##### zookeeper_service(baseservice/zookeeper/01.zookeeper_service.yml)
@@ -648,7 +649,7 @@
                   value: Repli@2019
                 ports:
                 - name: mysql
-                  containerPort: 3306
+                  containerPort: 3306e
                 volumeMounts:
                 - name: mysqlpvc
                   mountPath: /var/lib/mysql
@@ -774,6 +775,134 @@
         
             ![1567520912445](https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1567587360849.png)
     
+- 配置mycat读写分离服务(购买RDS服务可以忽略mycat)
+
+    1. 配置mycat_service(baseservice/mycat/01.mycat_service.yml)
+
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: mycat
+          labels:
+            app: mycat
+        spec:
+          ports:
+          - port: 8066
+            name: server
+          selector:
+            app: mycat
+        ```
+
+    2. 配置mycat_config(baseservice/mycat/02.mycat_config.yml)
+
+        ```yaml
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: mycat
+          labels:
+            app: mycat
+        data:
+          schema.xml: |
+            <?xml version="1.0"?>
+            <!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+            <mycat:schema xmlns:mycat="http://io.mycat/">
+                <schema name="clota" checkSQLschema="false" sqlMaxLimit="100" dataNode="dn1"></schema>
+                <schema name="report" checkSQLschema="false" sqlMaxLimit="100" dataNode="dn2"></schema>
+                <dataNode name="dn1" dataHost="localhost" database="clota" />
+                <dataNode name="dn2" dataHost="localhost" database="report" />
+                <dataHost name="localhost" maxCon="1000" minCon="10" balance="3" writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+                    <heartbeat>select user()</heartbeat>
+                    <!-- 可以配置多个主从 -->
+                    <writeHost host="hostM1" url="mysql-0.mysql:3306" user="sunac" password="hqpw@sunac1918">
+                        <!-- 可以配置多个从库 -->
+                        <readHost host="hostS2" url="mysql-1.mysql:3306" user="sunac" password="hqpw@sunac1918" />
+                    </writeHost>
+                </dataHost>
+            </mycat:schema>
+          server.xml: |
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE mycat:server SYSTEM "server.dtd">
+            <mycat:server xmlns:mycat="http://io.mycat/">
+                <system>
+                <property name="nonePasswordLogin">0</property>
+                <property name="useHandshakeV10">1</property>
+                <property name="useSqlStat">0</property>
+                <property name="useGlobleTableCheck">0</property>
+                <property name="sequnceHandlerType">2</property>
+                <property name="subqueryRelationshipCheck">false</property>
+                <property name="processorBufferPoolType">0</property>
+                <property name="handleDistributedTransactions">0</property>
+                <property name="useOffHeapForMerge">1</property>
+                <property name="memoryPageSize">64k</property>
+                <property name="spillsFileBufferSize">1k</property>
+                <property name="useStreamOutput">0</property>
+                <property name="systemReserveMemorySize">384m</property>
+                <property name="useZKSwitch">false</property>
+                <property name="strictTxIsolation">false</property>
+                <property name="useZKSwitch">true</property>
+                </system>
+                <user name="sunac" defaultAccount="true">
+                <property name="password">sunac@mycat2019</property>
+                <property name="schemas">clota,report</property>
+                </user>
+                <user name="sunacread">
+                <property name="password">sunac@mycat2019</property>
+                <property name="schemas">clota,report</property>
+                <property name="readOnly">true</property>
+                </user>
+            </mycat:server>
+        ```
+
+    3. 配置mycat_deployment(baseservice/mycat/03.mycat_deployment.yml)
+
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: mycat
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: mycat
+          template:
+            metadata:
+              labels:
+                app: mycat
+            spec:
+              nodeSelector:
+                roleA: BaseService
+              affinity: # affinity 尽量避免多个pod部署在一个node上,除非node数量少于pod数量
+                podAntiAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    - labelSelector:
+                        matchExpressions:
+                          - key: "app" # 标签名
+                            operator: In
+                            values:
+                            - mycat # 标签值
+                      topologyKey: "kubernetes.io/hostname"
+              containers:
+              - name: mycat
+                image: guiaiy/mycat:1.6.6.1
+                command:
+                - bash
+                - "-c"
+                - |
+                  set -ex
+                  cp /mnt/config-map/* /usr/local/mycat/conf/
+                  /usr/local/mycat/bin/mycat console
+                volumeMounts:
+                - name: mycatconfig
+                  mountPath: /mnt/config-map
+              volumes:
+              - name: mycatconfig
+                configMap:
+                  name: mycat
+        ```
+
 - #### 配置一主两从redis(这里我们使用先配置一主三从,然后在缩减的方法,可以体验一下缩放配置的方便性)
   
     1. 配置redis_service(baseservice/redis/01.redis_service.yml)
@@ -1024,7 +1153,6 @@
     
           ![1567521706660](https://erdongmuxin.oss-cn-shenzhen.aliyuncs.com/小书匠/1567587421167.png)
           
-    7. 
     
 - ### 配置后端
 
@@ -1131,6 +1259,7 @@
                         - '-c'
                         - |
                           set -ex
+                          sleep 20
                           result=`/usr/share/zookeeper/bin/zkCli.sh -server zk-cs:2181 ls /dubbo/com.quick.clota.face.members.MemberAccountApi | grep -o providers`
                           [[ $result == "providers" ]] || exit 1
                       initialDelaySeconds: 30
@@ -1327,6 +1456,10 @@
         name: nginxconf
       data: # <以下数据请根据实际情况修改>
         clota.conf: |
+          gzip on;
+          gzip_buffers 4 16k;
+          gzip_comp_level 5;
+          gzip_types text/plain application/javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
           server {
             listen       80;
             server_name  www.erdongmuxin.cn;

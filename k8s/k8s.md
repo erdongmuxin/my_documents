@@ -136,7 +136,7 @@
           
         ```
 
-        ##### 使用`kubectl create -f $File`命令创建相关资
+        ##### 使用`kubectl create -f $File`命令创建相关资源
 
     - Pod控制器
 
@@ -762,8 +762,14 @@
             kubectl config --help
             ```
     
-        - 私钥证书认证
+        - API
     
+            ```yaml
+            ObjectURL: /apis/<GROUP>/<VERSION>/namespaces/<NAMESPACE_NAME>/<KIND>/<OBJECT_ID>
+            ```
+        
+        - 私钥证书认证
+        
             1. 创建私钥与证书
     
                 ```shell
@@ -782,16 +788,149 @@
     
                 ```shell
                 kubectl config set-context context-cluster1-songda --cluster=cluster1 --user=songda 
+                # cluseter的名字通过kubectl config view得到
                 ```
-    
+        
             4. 切换用户
-    
+        
                 ```shell
                 kubectl config use-context context-cluster1-songda 
                 kubectl get node # 可以看到,虽然做了认证,但是没有授权,这个新的用户并没有权限做任何操作
+                Error from server (Forbidden): nodes is forbidden: User "songda" cannot list resource "nodes" in API group "" at the cluster scope
                 ```
-    
+        
+        - RBAC授权
+        
+            - role授权(名称空间级别,只对当前名称空间有效)
+        
+                1. 创建role,并赋予role权限
+        
+                    ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1
+                    kind: Role
+                    metadata:
+                      name: pods-reader
+                      namespace: default
+                    rules:
+                    - apiGroups: # 设置群组
+                      - ""
+                      resources: # 设置资源
+                      - pods
+                      verbs: # 设置权限
+                      - get
+                      - list
+                      - watch
+                    ```
+        
+                2. 创建rolebinding,将用户绑定到role上
+        
+                    ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1
+                    kind: RoleBinding
+                    metadata:
+                      name: songda
+                      namespace: default
+                    roleRef:
+                      apiGroup: rbac.authorization.k8s.io
+                      kind: Role
+                      name: pods-reader # 设置绑定的role
+                    subjects:
+                    - apiGroup: rbac.authorization.k8s.io # 设置绑定的用户
+                      kind: User
+                      name: songda
+                    ```
+        
+                3. 用户对pod有了权限,但是对其他资源仍然无法访问(记得先切换用户)
+        
+                    ![1568190105128](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568190105128.png)
+        
+            - clusterrole授权(集群级别,对所有名称空间有效,注意切回admin用户)
+        
+                1. 创建clusterrole
+        
+                    ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1
+                    kind: ClusterRole
+                    metadata:
+                      name: cluster-reader
+                    rules:
+                    - apiGroups:
+                      - ""
+                      resources:
+                      - pods
+                      verbs:
+                      - get
+                      - list
+                      - watch
+                    ```
+        
+                2. 创建clusterrolebinding,绑定clusterrole
+        
+                    ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1beta1
+                    kind: ClusterRoleBinding
+                    metadata:
+                      name: songda-all-ns
+                    roleRef:
+                      apiGroup: rbac.authorization.k8s.io
+                      kind: ClusterRole
+                      name: cluster-reader
+                    subjects:
+                    - apiGroup: rbac.authorization.k8s.io
+                      kind: User
+                      name: songda
+                    ```
+        
+                3. 所有名称空间都有了pod查看权限,但是其他资源则没有(记得先切换用户)
+        
+                    ![1568190462651](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568190462651.png)
+        
+                4. 利用rolebiding绑定clusterrole,可以将clusterrole的权限降级为名称空间级别(删除之前的规则)
+        
+                    ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1
+                    kind: RoleBinding
+                    metadata:
+                      name: rolebiding-clusterrole
+                    roleRef:
+                      apiGroup: rbac.authorization.k8s.io
+                      kind: ClusterRole
+                      name: cluster-reader
+                    subjects:
+                    - apiGroup: rbac.authorization.k8s.io
+                      kind: User
+                      name: songda
+                    ```
+                    
+        5. 验证(切换用户验证)
                 
+            ![1568191024574](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568191024574.png)
+                
+        6. 用系统的admin权限为每个名称空间设置管理员(切换回admin操作)
+                
+            ```yaml
+                    apiVersion: rbac.authorization.k8s.io/v1
+                    kind: RoleBinding
+                    metadata:
+                      creationTimestamp: null
+                      name: default-admin
+                    roleRef:
+                      apiGroup: rbac.authorization.k8s.io
+                      kind: ClusterRole # 权限设置为admin的clusterrole
+                      name: admin
+                    subjects:
+                    - apiGroup: rbac.authorization.k8s.io
+                      kind: User
+                      name: songda
+                    ```
+                
+        7. 切回songda用户,可以看到拥有了所有的权限
+                
+            ![1568191613350](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568191613350.png)
+                
+        8. 使用`openssl x509 -in /etc/kubernetes/ssl/admin.pem -text -noout`查看admin的分组
+            
+        
 
 
 
